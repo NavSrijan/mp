@@ -1,0 +1,4 @@
+.hex-predict-tile { stroke: #ff5722; stroke-width: 1; fill: rgba(255,87,34,0.25); }
+.hex-predict-top { stroke: #d32f2f; stroke-width: 2; fill: rgba(211,47,47,0.45); }
+#predict-panel { margin-top:8px; }
+#predict-panel .row { margin-bottom:4px; }

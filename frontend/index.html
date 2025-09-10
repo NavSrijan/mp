@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Crowd Simulation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div class="controls">
+        <label>Agents: <input type="number" id="crowd-size" value="50" min="1"></label>
+        <button id="add-crowd-btn">Add Crowd</button>
+        <hr>
+        <div class="route-select">
+            <div class="row">
+                <button id="select-source-btn">Select Source</button>
+                <button id="select-dest-btn">Select Destination</button>
+            </div>
+            <div class="row small" id="route-status">Source: — | Destination: —</div>
+            <div class="row">
+                <button id="add-routed-crowd-btn" disabled>Add Routed Crowd</button>
+                <button id="clear-route-btn" disabled>Clear</button>
+            </div>
+        </div>
+        <hr>
+        <div class="event-controls">
+            <div class="section-title">Event Waves</div>
+            <label>Wave Size <input type="number" id="ev-wave-size" value="200" min="1"></label>
+            <label>Interval (s) <input type="number" id="ev-interval" value="15" min="1"></label>
+            <label>Dwell Min (s) <input type="number" id="ev-dwell-min" value="30" min="1"></label>
+            <label>Dwell Max (s) <input type="number" id="ev-dwell-max" value="90" min="1"></label>
+            <label>Exit <input type="checkbox" id="ev-exit" checked></label>
+            <label>Max Waves <input type="number" id="ev-max-waves" value="5" min="1"></label>
+            <button id="start-event-btn" disabled>Start Event (use S/D)</button>
+            <button id="stop-event-btn">Stop Event</button>
+            <div class="row small" id="event-status">Event: inactive</div>
+        </div>
+        <hr>
+        <div class="random-controls">
+            <div class="section-title">Random Traffic</div>
+            <label>Target <input type="number" id="rt-target" value="250" min="0"></label>
+            <label>Max <input type="number" id="rt-max" value="600" min="0"></label>
+            <label>Spawn Int (s) <input type="number" id="rt-interval" value="3" min="1"></label>
+            <label>Batch Min <input type="number" id="rt-bmin" value="10" min="1"></label>
+            <label>Batch Max <input type="number" id="rt-bmax" value="25" min="1"></label>
+            <label>Min Speed <input type="number" id="rt-vmin" value="0.0003" step="0.0001"></label>
+            <label>Max Speed <input type="number" id="rt-vmax" value="0.0008" step="0.0001"></label>
+            <button id="start-random-btn">Start Random</button>
+            <button id="stop-random-btn">Stop Random</button>
+            <div class="row small" id="random-status">Random: inactive</div>
+        </div>
+        <hr>
+        <div class="speed-controls">
+            <div class="section-title">Global Speed</div>
+            <label>Multiplier × <input type="number" id="spd-mult" value="1.0" min="0.1" max="5" step="0.1"></label>
+            <button id="apply-speed-btn">Apply Speed</button>
+            <div class="row small" id="speed-status">Speed: ×1.0</div>
+        </div>
+        <hr>
+        <div class="legend small">
+            <strong>Legend:</strong><br>
+            <span class="legend-box random"></span> Random<br>
+            <span class="legend-box to_dest"></span> Event → Dest<br>
+            <span class="legend-box dwelling"></span> Event Dwelling<br>
+            <span class="legend-box exiting"></span> Event Exiting<br>
+            <span class="legend-box settled"></span> Event Settled<br>
+            <span class="legend-box routed"></span> Routed (stop)<br>
+            <span class="legend-box gateway-entry"></span> Gateway<br>
+            <span class="legend-box tower"></span> Mobile Tower<br>
+            <span class="legend-box toll"></span> Toll Gate
+        </div>
+        <hr>
+        <div class="infra-controls">
+            <div class="section-title">Infrastructure</div>
+            <div class="row wrap">
+                <button id="mode-gateway-btn">Add Gateway</button>
+                <input type="number" id="tower-radius" value="0.01" step="0.005" title="Tower radius" />
+                <button id="mode-tower-btn" title="Uses radius">Add Tower</button>
+                <input type="number" id="toll-fee" value="50" step="5" title="Toll fee" />
+                <button id="mode-toll-btn" title="Uses fee">Add Toll</button>
+            </div>
+            <div class="row wrap">
+                <button id="infra-save-btn" title="Persist infrastructure to disk">Save Infra</button>
+                <button id="infra-load-btn" title="Reload infrastructure from disk">Load Infra</button>
+                <button id="infra-clear-btn" title="Remove all gateways/towers/tolls">Clear Infra</button>
+                <button id="agents-clear-btn" title="Remove all agents">Clear Crowd</button>
+                <button id="cancel-mode-btn" disabled>Cancel</button>
+                <button id="gateway-stats-btn" title="Refresh infrastructure stats">Refresh Stats</button>
+            </div>
+            <div class="row small" id="infra-status">Mode: none</div>
+        </div>
+    </div>
+    <div id="help-toggle">?</div>
+    <div id="help-panel" class="hidden">
+        <h4>Crowd Simulator Help</h4>
+        <ol>
+            <li>Click map once: set Source (green).</li>
+            <li>Click map again: set Destination (red) + preview route.</li>
+            <li>Click Start Event to spawn waves.</li>
+            <li>Third click resets and picks a new Source.</li>
+            <li>Use Random Traffic for background movement.</li>
+        </ol>
+        <p>You can still use Select buttons for precise control. Routed crowd spawns static group traveling once.</p>
+        <button id="close-help">Close</button>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

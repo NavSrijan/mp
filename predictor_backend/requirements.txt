@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+h3
+pydantic
+numpy
+httpx
+statsmodels
