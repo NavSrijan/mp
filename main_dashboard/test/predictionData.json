@@ -1,0 +1,5 @@
+[
+  {"id":"sectorA","label":"SECTOR A","x":120,"y":80,"severity":"high","value":0.78},
+  {"id":"gate3","label":"GATE 3","x":175,"y":120,"severity":"medium","value":0.55},
+  {"id":"sectorB","label":"SECTOR B","x":230,"y":180,"severity":"low","value":0.22}
+]
